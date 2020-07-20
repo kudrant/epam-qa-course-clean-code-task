@@ -15,22 +15,15 @@ abstract public class Plane {
         this.maxLoadCapacity = maxLoadCapacity;
     }
 
-    public String getModel() {
-        return model;
-    }
-
-    public int getMS() {
+    public int getMaxSpeed() {
         return maxSpeed;
     }
 
-    public int Get_Max_Flight_Distance() {
+    public int getMaxFlightDistance() {
         return maxFlightDistance;
     }
 
-    public int getMinLoadCapacity() {
-        int result = this.maxLoadCapacity;
-        return result;
-    }
+    public int getMinLoadCapacity() { return maxLoadCapacity; }
 
     @Override
     public String toString() {
@@ -46,15 +39,15 @@ abstract public class Plane {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Plane)) return false;
-        Plane plane = (Plane) o;
-        return maxSpeed == plane.maxSpeed &&
-                maxFlightDistance == plane.maxFlightDistance &&
-                maxLoadCapacity == plane.maxLoadCapacity &&
-                Objects.equals(model, plane.model);
+        return maxSpeed == ((Plane) o).maxSpeed &&
+                maxFlightDistance == ((Plane) o).maxFlightDistance &&
+                maxLoadCapacity == ((Plane) o).maxLoadCapacity &&
+                Objects.equals(model, ((Plane) o).model);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(model, maxSpeed, maxFlightDistance, maxLoadCapacity);
     }
+
 }

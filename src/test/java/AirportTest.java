@@ -1,4 +1,4 @@
-import Planes.experimentalPlane;
+import Planes.ExperimentalPlane;
 import models.ClassificationLevel;
 import models.ExperimentalTypes;
 import models.MilitaryType;
@@ -27,37 +27,27 @@ public class AirportTest {
             new MilitaryPlane("F-15", 1500, 12000, 10000, MilitaryType.FIGHTER),
             new MilitaryPlane("F-22", 1550, 13000, 11000, MilitaryType.FIGHTER),
             new MilitaryPlane("C-130 Hercules", 650, 5000, 110000, MilitaryType.TRANSPORT),
-            new experimentalPlane("Bell X-14", 277, 482, 500, ExperimentalTypes.HIGH_ALTITUDE, ClassificationLevel.SECRET),
-            new experimentalPlane("Ryan X-13 Vertijet", 560, 307, 500, ExperimentalTypes.VTOL, ClassificationLevel.TOP_SECRET)
+            new ExperimentalPlane("Bell X-14", 277, 482, 500, ExperimentalTypes.HIGH_ALTITUDE, ClassificationLevel.SECRET),
+            new ExperimentalPlane("Ryan X-13 Vertijet", 560, 307, 500, ExperimentalTypes.VTOL, ClassificationLevel.TOP_SECRET)
     );
 
+    private Airport airport = new Airport(planes);
     private static PassengerPlane planeWithMaxPassengerCapacity = new PassengerPlane("Boeing-747", 980, 16100, 70500, 242);
 
     @Test
     public void testGetTransportMilitaryPlanes() {
-        Airport airport = new Airport(planes);
-        List<MilitaryPlane> transportMilitaryPlanes = airport.getTransportMilitaryPlanes();
-        boolean flag = false;
-        for (MilitaryPlane militaryPlane : transportMilitaryPlanes) {
-            if ((militaryPlane.getType() == MilitaryType.TRANSPORT)) {
-                flag = true;
-                break;
-            }
+        for (MilitaryPlane militaryPlane : airport.getTransportMilitaryPlanes()) {
+            Assert.assertTrue(militaryPlane.getType() == MilitaryType.TRANSPORT);
         }
-        Assert.assertEquals(flag, true);
     }
 
     @Test
     public void testGetPassengerPlaneWithMaxCapacity() {
-        System.out.println("TEST testGetPassengerPlaneWithMaxCapacity started!");
-        Airport airport = new Airport(planes);
-        PassengerPlane expectedPlaneWithMaxPassengersCapacity = airport.getPassengerPlaneWithMaxPassengersCapacity();
-        Assert.assertTrue(expectedPlaneWithMaxPassengersCapacity.equals(planeWithMaxPassengerCapacity));
+        Assert.assertTrue(airport.getPassengerPlaneWithMaxPassengersCapacity().equals(planeWithMaxPassengerCapacity));
     }
 
     @Test
-    public void test3() {
-        Airport airport = new Airport(planes);
+    public void testSortByMaxLoadCapacity() {
         airport.sortByMaxLoadCapacity();
         List<? extends Plane> planesSortedByMaxLoadCapacity = airport.getPlanes();
 
@@ -75,31 +65,15 @@ public class AirportTest {
 
     @Test
     public void testHasAtLeastOneBomberInMilitaryPlanes() {
-        Airport airport = new Airport(planes);
-        List<MilitaryPlane> bomberMilitaryPlanes = airport.getBomberMilitaryPlanes();
-        boolean flag = false;
-        for (MilitaryPlane militaryPlane : bomberMilitaryPlanes) {
-            if ((militaryPlane.getType() == MilitaryType.BOMBER)) {
-                flag = true;
-            }
-            else {
-                Assert.fail("Test failed!");
-            }
+        for (MilitaryPlane militaryPlane : airport.getBomberMilitaryPlanes()) {
+            Assert.assertTrue(militaryPlane.getType() == MilitaryType.BOMBER);
         }
-        // if not failed
     }
 
     @Test
     public void testExperimentalPlanesHasClassificationLevelHigherThanUnclassified(){
-        Airport airport = new Airport(planes);
-        List<experimentalPlane> experimentalPlanes = airport.getExperimentalPlanes();
-        boolean hasUnclassifiedPlanes = false;
-        for(experimentalPlane experimentalPlane : experimentalPlanes){
-            if(experimentalPlane.getClassificationLevel() == ClassificationLevel.UNCLASSIFIED){
-                hasUnclassifiedPlanes = true;
-                break;
-            }
+        for(ExperimentalPlane experimentalPlane : airport.getExperimentalPlanes()){
+            Assert.assertTrue(experimentalPlane.getClassificationLevel() == ClassificationLevel.UNCLASSIFIED);
         }
-        Assert.assertFalse(hasUnclassifiedPlanes);
     }
 }
