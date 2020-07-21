@@ -37,13 +37,13 @@ public class AirportTest {
     @Test
     public void testGetTransportMilitaryPlanes() {
         for (MilitaryPlane militaryPlane : airport.getTransportMilitaryPlanes()) {
-            Assert.assertTrue(militaryPlane.getType() == MilitaryType.TRANSPORT);
+            Assert.assertSame(militaryPlane.getType(), MilitaryType.TRANSPORT);
         }
     }
 
     @Test
     public void testGetPassengerPlaneWithMaxCapacity() {
-        Assert.assertTrue(airport.getPassengerPlaneWithMaxPassengersCapacity().equals(planeWithMaxPassengerCapacity));
+        Assert.assertEquals(planeWithMaxPassengerCapacity, airport.getPassengerPlaneWithMaxPassengersCapacity());
     }
 
     @Test
@@ -55,7 +55,7 @@ public class AirportTest {
         for (int i = 0; i < planesSortedByMaxLoadCapacity.size() - 1; i++) {
             Plane currentPlane = planesSortedByMaxLoadCapacity.get(i);
             Plane nextPlane = planesSortedByMaxLoadCapacity.get(i + 1);
-            if (currentPlane.getMinLoadCapacity() > nextPlane.getMinLoadCapacity()) {
+            if (currentPlane.getMaxLoadCapacity() > nextPlane.getMaxLoadCapacity()) {
                 nextPlaneMaxLoadCapacityIsHigherThanCurrent = false;
                 break;
             }
@@ -66,14 +66,14 @@ public class AirportTest {
     @Test
     public void testHasAtLeastOneBomberInMilitaryPlanes() {
         for (MilitaryPlane militaryPlane : airport.getBomberMilitaryPlanes()) {
-            Assert.assertTrue(militaryPlane.getType() == MilitaryType.BOMBER);
+            Assert.assertSame(militaryPlane.getType(), MilitaryType.BOMBER);
         }
     }
 
     @Test
     public void testExperimentalPlanesHasClassificationLevelHigherThanUnclassified(){
         for(ExperimentalPlane experimentalPlane : airport.getExperimentalPlanes()){
-            Assert.assertTrue(experimentalPlane.getClassificationLevel() == ClassificationLevel.UNCLASSIFIED);
+            Assert.assertSame(experimentalPlane.getClassificationLevel(), ClassificationLevel.UNCLASSIFIED);
         }
     }
 }

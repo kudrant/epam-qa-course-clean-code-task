@@ -23,7 +23,7 @@ abstract public class Plane {
         return maxFlightDistance;
     }
 
-    public int getMinLoadCapacity() { return maxLoadCapacity; }
+    public int getMaxLoadCapacity() { return maxLoadCapacity; }
 
     @Override
     public String toString() {
